@@ -5,7 +5,7 @@ const axios = require('axios');
 const ora = require('ora');
 const { saveCredentials, getCredentials, clearCredentials } = require('../utils/storage');
 
-const BACKEND_URL = process.env.INSIGHTA_API_URL || 'http://localhost:8080';
+const BACKEND_URL = process.env.INSIGHTA_API_URL;
 
 function base64Url(buffer) {
   return Buffer.from(buffer).toString('base64').replace(/\+/g, '-').replace(/\//g, '_').replace(/=+$/, '');
@@ -40,7 +40,7 @@ async function login() {
 
     try {
       spinner.text = 'Completing login...';
-      const tokenRes = await axios.post(`${BACKEND_URL}/auth/github/cli/callback`, {
+      const tokenRes = await axios.post(`${BACKEND_URL}/auth/github/callback`, {
         code,
         code_verifier: codeVerifier,
         redirect_uri: redirectUri
